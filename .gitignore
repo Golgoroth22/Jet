@@ -1,0 +1,17 @@
+*.iml
+*.jks
+*.png
+*.jpg
+*.webp
+.gradle
+.DS_Store
+.externalNativeBuild
+
+/gradlew.bat
+/local.properties
+/signing.properties
+
+/.idea/
+
+/build/
+/gradle/
