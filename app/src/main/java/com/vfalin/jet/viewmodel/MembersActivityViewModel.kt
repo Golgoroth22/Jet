@@ -43,7 +43,6 @@ class MembersActivityViewModel(private val repository: MembersActivityRepository
                 isLoading = false
             )
         )
-        Timber.i("MembersActivityViewModel receiveSuccessfulResponse $response")
     }
 
     private fun receiveFailureResponse(t: Throwable) {
@@ -57,7 +56,6 @@ class MembersActivityViewModel(private val repository: MembersActivityRepository
                 )
             )
         }
-        Timber.e("MembersActivityViewModel receiveFailureResponse ${t.localizedMessage}")
     }
 
     fun switchInternetConnectionStatus(status: Boolean) {

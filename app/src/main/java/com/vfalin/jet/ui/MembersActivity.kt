@@ -38,6 +38,7 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_main)
         viewModel = injectViewModel(factory)
         initViews()
+        initListeners()
         initLiveData()
         viewModel.getMembers()
     }
@@ -52,6 +53,13 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
+    private fun initListeners() {
+        activity_members_recycler_swiperefresh.setOnRefreshListener {
+            viewModel.getMembers()
+            activity_members_recycler_swiperefresh.isRefreshing = false
+        }
+    }
+
     private fun initLiveData() {
         viewModel.internetLiveData.observe(this, { hasInternetConnection ->
             viewModel.switchInternetConnectionStatus(hasInternetConnection)
@@ -62,6 +70,11 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
         viewModel.membersLiveData.observe(this, { uiResponse ->
             if (uiResponse.data != null) {
                 membersAdapter.update(uiResponse.data)
+                if (uiResponse.data.isEmpty()) {
+                    activity_members_info_text.visibility = View.VISIBLE
+                } else {
+                    activity_members_info_text.visibility = View.GONE
+                }
             }
             if (uiResponse.error != null) {
                 Snackbar.make(
@@ -72,6 +85,7 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
             }
             if (uiResponse.isLoading) {
                 activity_members_progress_bar.visibility = View.VISIBLE
+                activity_members_info_text.visibility = View.GONE
             } else {
                 activity_members_progress_bar.visibility = View.GONE
             }
