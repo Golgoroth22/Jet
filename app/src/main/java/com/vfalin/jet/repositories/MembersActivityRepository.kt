@@ -1,12 +1,12 @@
 package com.vfalin.jet.repositories
 
-import com.vfalin.jet.network.pojo.MembersResponse
+import com.vfalin.jet.db.pojo.MemberDB
 
 interface MembersActivityRepository {
+
     suspend fun getMembers(
-        userId: String,
-        token: String,
-        onSuccess: (MembersResponse) -> Unit,
+        hasInternetConnection: Boolean,
+        onSuccess: (List<MemberDB>) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 }

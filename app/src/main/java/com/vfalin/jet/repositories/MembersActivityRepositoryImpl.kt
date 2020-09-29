@@ -1,20 +1,28 @@
 package com.vfalin.jet.repositories
 
-import com.vfalin.jet.network.pojo.MembersResponse
+import com.vfalin.jet.db.dao.MembersDao
+import com.vfalin.jet.db.pojo.MemberDB
 import com.vfalin.jet.network.services.MembersService
+import com.vfalin.jet.utils.Constants
 
 class MembersActivityRepositoryImpl(
-    private val membersService: MembersService
+    private val membersService: MembersService,
+    private val membersDao: MembersDao
 ) : MembersActivityRepository {
 
     override suspend fun getMembers(
-        userId: String,
-        token: String,
-        onSuccess: (MembersResponse) -> Unit,
+        hasInternetConnection: Boolean,
+        onSuccess: (List<MemberDB>) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         try {
-            onSuccess.invoke(membersService.getMembers(userId, token))
+            if (hasInternetConnection) {
+                val members = membersService.getMembers(Constants.USER_ID, Constants.USER_TOKEN)
+                membersDao.insertUsers(members.members.map { it.convertTo() })
+                onSuccess.invoke(membersDao.getMembers())
+            } else {
+                onSuccess.invoke(membersDao.getMembers())
+            }
         } catch (e: Exception) {
             onFailure.invoke(e)
         }

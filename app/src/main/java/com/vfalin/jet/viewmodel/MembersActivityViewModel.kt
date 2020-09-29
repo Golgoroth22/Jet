@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vfalin.jet.db.pojo.MemberDB
 import com.vfalin.jet.di.Scopes
 import com.vfalin.jet.model.MemberUi
 import com.vfalin.jet.model.UiResponse
 import com.vfalin.jet.network.pojo.MembersResponse
 import com.vfalin.jet.repositories.MembersActivityRepository
 import com.vfalin.jet.utils.ConnectivityLiveData
-import com.vfalin.jet.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,18 +29,17 @@ class MembersActivityViewModel(private val repository: MembersActivityRepository
         viewModelScope.launch {
             withContext(this.coroutineContext + Dispatchers.IO) {
                 repository.getMembers(
-                    Constants.USER_ID,
-                    Constants.USER_TOKEN,
+                    hasInternetConnection,
                     { response -> receiveSuccessfulResponse(response) },
                     { throwable -> receiveFailureResponse(throwable) })
             }
         }
     }
 
-    private fun receiveSuccessfulResponse(response: MembersResponse) {
+    private fun receiveSuccessfulResponse(response: List<MemberDB>) {
         mMembersLiveData.postValue(
             UiResponse(
-                response.members.map { it.convertTo() },
+                response.map { it.convertTo() },
                 isLoading = false
             )
         )

@@ -1,7 +1,7 @@
 package com.vfalin.jet.network.pojo
 
 import com.squareup.moshi.Json
-import com.vfalin.jet.model.MemberUi
+import com.vfalin.jet.db.pojo.MemberDB
 
 data class MemberResponse(
     @Json(name = "_id") val id: String,
@@ -10,5 +10,5 @@ data class MemberResponse(
     @Json(name = "utcOffset") val utcOffset: Double?,
     @Json(name = "username") val username: String?
 ) {
-    fun convertTo() = MemberUi(id, status, name, utcOffset, username)
+    fun convertTo() = MemberDB(id, status, name, utcOffset, username)
 }

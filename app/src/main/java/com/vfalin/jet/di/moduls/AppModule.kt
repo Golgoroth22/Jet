@@ -1,8 +1,10 @@
 package com.vfalin.jet.di.moduls
 
 import android.content.Context
+import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.vfalin.jet.db.AppDatabase
 import com.vfalin.jet.network.LoggingInterceptor
 import com.vfalin.jet.network.RetrofitBase
 import com.vfalin.jet.network.services.MembersService
@@ -25,6 +27,11 @@ class AppModule(context: Context) : Module() {
         ).addConverterFactory(
             MoshiConverterFactory.create(Moshi.Builder().add(KotlinJsonAdapterFactory()).build())
         ).build()
+    val db = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        "app-database"
+    ).build()
 
     init {
         bind(Context::class.java).toInstance(context)
@@ -32,7 +39,10 @@ class AppModule(context: Context) : Module() {
 
         bind(MembersActivityViewModelFactory::class.java).toInstance(
             MembersActivityViewModelFactory(
-                MembersActivityRepositoryImpl(retrofit.create(MembersService::class.java))
+                MembersActivityRepositoryImpl(
+                    retrofit.create(MembersService::class.java),
+                    db.membersDao()
+                )
             )
         )
     }

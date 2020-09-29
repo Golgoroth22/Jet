@@ -39,10 +39,6 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
         viewModel = injectViewModel(factory)
         initViews()
         initLiveData()
-    }
-
-    override fun onResume() {
-        super.onResume()
         viewModel.getMembers()
     }
 
@@ -59,6 +55,9 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
     private fun initLiveData() {
         viewModel.internetLiveData.observe(this, { hasInternetConnection ->
             viewModel.switchInternetConnectionStatus(hasInternetConnection)
+            if (hasInternetConnection) {
+                viewModel.getMembers()
+            }
         })
         viewModel.membersLiveData.observe(this, { uiResponse ->
             if (uiResponse.data != null) {

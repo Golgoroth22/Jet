@@ -10,7 +10,7 @@
     <dimen name="size_avatar">64dp</dimen>
     <dimen name="size_status">20dp</dimen>
 
-    <dimen name="radius_avatar">45dp</dimen>
+    <dimen name="radius_avatar">32dp</dimen>
     <dimen name="radius_status">10dp</dimen>
 
     <dimen name="elevation_none">0dp</dimen>
