@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Text" />
+
+    <style name="Text.Regular" />
+
+    <style name="Text.Regular.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="Text.Regular.Black.16">
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>

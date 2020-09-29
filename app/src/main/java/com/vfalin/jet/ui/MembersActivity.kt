@@ -2,28 +2,78 @@ package com.vfalin.jet.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.vfalin.jet.R
-import com.vfalin.jet.network.LoggingInterceptor
-import com.vfalin.jet.network.RetrofitNetworkService
-import com.vfalin.jet.network.services.MembersService
-import com.vfalin.jet.utils.Constants
+import com.vfalin.jet.di.Scopes
+import com.vfalin.jet.ui.adapters.MembersAdapter
+import com.vfalin.jet.utils.injectViewModel
+import com.vfalin.jet.viewmodel.MembersActivityViewModel
+import com.vfalin.jet.viewmodel.factories.MembersActivityViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import toothpick.Toothpick
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class MembersActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
+    @Inject
+    lateinit var factory: MembersActivityViewModelFactory
+    private lateinit var viewModel: MembersActivityViewModel
+
+    private lateinit var membersRecycler: RecyclerView
+    private lateinit var membersAdapter: MembersAdapter
+    private lateinit var membersManager: LinearLayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Toothpick.inject(this, Toothpick.openScope(Scopes.APP))
         setContentView(R.layout.activity_main)
+        viewModel = injectViewModel(factory)
+        initViews()
+        initLiveData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMembers()
+    }
+
+    private fun initViews() {
+        membersManager = LinearLayoutManager(this)
+        membersAdapter = MembersAdapter()
+        membersRecycler = findViewById<RecyclerView>(R.id.activity_members_recycler).apply {
+            layoutManager = membersManager
+            adapter = membersAdapter
+        }
+    }
+
+    private fun initLiveData() {
+        viewModel.internetLiveData.observe(this, { hasInternetConnection ->
+            viewModel.switchInternetConnectionStatus(hasInternetConnection)
+        })
+        viewModel.membersLiveData.observe(this, { uiResponse ->
+            if (uiResponse.data != null) {
+                membersAdapter.update(uiResponse.data)
+            }
+            if (uiResponse.error != null) {
+                Snackbar.make(
+                    activity_members_root_layout,
+                    uiResponse.error.localizedMessage,
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+            if (uiResponse.isLoading) {
+                activity_members_progress_bar.visibility = View.VISIBLE
+            } else {
+                activity_members_progress_bar.visibility = View.GONE
+            }
+        })
     }
 }
