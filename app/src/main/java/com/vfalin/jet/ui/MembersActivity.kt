@@ -1,5 +1,6 @@
 package com.vfalin.jet.ui
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -46,6 +47,7 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun initViews() {
+        activity_members_toolbar.setTitleTextColor(Color.WHITE)
         membersManager = LinearLayoutManager(this)
         membersAdapter = MembersAdapter()
         membersRecycler = findViewById<RecyclerView>(R.id.activity_members_recycler).apply {

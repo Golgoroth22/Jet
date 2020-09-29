@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
@@ -40,6 +41,8 @@ class MembersAdapter : RecyclerView.Adapter<MembersAdapter.MemberViewHolder>() {
         private val name: TextView = itemView.findViewById(R.id.item_member_name_text)
         private val statusCard: MaterialCardView =
             itemView.findViewById(R.id.item_member_status_card)
+        private val rootLayout: ConstraintLayout =
+            itemView.findViewById(R.id.item_member_root_layout)
 
         fun bind(member: MemberUi) {
             Glide.with(avatar.context)
@@ -56,6 +59,9 @@ class MembersAdapter : RecyclerView.Adapter<MembersAdapter.MemberViewHolder>() {
                 Constants.MEMBER_STATUS_OFFLINE -> {
                     statusCard.visibility = View.GONE
                 }
+            }
+            rootLayout.setOnClickListener {
+                TODO("Переход на экран с подробной информацией")
             }
         }
     }

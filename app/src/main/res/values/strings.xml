@@ -1,3 +1,7 @@
 <resources>
+    <!-- App -->
     <string name="app_name">Jet</string>
+
+    <!-- Activity Members -->
+    <string name="activity_members_title">Контакты</string>
 </resources>
