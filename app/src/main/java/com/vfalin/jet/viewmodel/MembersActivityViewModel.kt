@@ -4,17 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vfalin.jet.R
 import com.vfalin.jet.db.pojo.MemberDB
 import com.vfalin.jet.di.Scopes
 import com.vfalin.jet.model.MemberUi
 import com.vfalin.jet.model.UiResponse
-import com.vfalin.jet.network.pojo.MembersResponse
 import com.vfalin.jet.repositories.MembersActivityRepository
 import com.vfalin.jet.utils.ConnectivityLiveData
+import com.vfalin.jet.utils.ResourceManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import toothpick.Toothpick
 
 class MembersActivityViewModel(private val repository: MembersActivityRepository) : ViewModel() {
@@ -23,6 +23,9 @@ class MembersActivityViewModel(private val repository: MembersActivityRepository
     val internetLiveData: LiveData<Boolean> =
         Toothpick.openScope(Scopes.APP).getInstance(ConnectivityLiveData::class.java)
     private var hasInternetConnection = false
+    private val noInternetMessage: String =
+        Toothpick.openScope(Scopes.APP).getInstance(ResourceManager::class.java)
+            .getString(R.string.app_no_internet_message)
 
     fun getMembers() {
         mMembersLiveData.postValue(UiResponse(isLoading = true))
@@ -37,12 +40,7 @@ class MembersActivityViewModel(private val repository: MembersActivityRepository
     }
 
     private fun receiveSuccessfulResponse(response: List<MemberDB>) {
-        mMembersLiveData.postValue(
-            UiResponse(
-                response.map { it.convertTo() },
-                isLoading = false
-            )
-        )
+        mMembersLiveData.postValue(UiResponse(response.map { it.convertTo() }, isLoading = false))
     }
 
     private fun receiveFailureResponse(t: Throwable) {
@@ -50,10 +48,7 @@ class MembersActivityViewModel(private val repository: MembersActivityRepository
             mMembersLiveData.postValue(UiResponse(isLoading = false, error = t))
         } else {
             mMembersLiveData.postValue(
-                UiResponse(
-                    isLoading = false,
-                    error = Throwable("Отсутствует интернет соединение")
-                )
+                UiResponse(isLoading = false, error = Throwable(noInternetMessage))
             )
         }
     }
