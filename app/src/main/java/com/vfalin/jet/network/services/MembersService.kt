@@ -8,5 +8,6 @@ interface MembersService {
     suspend fun getMembers(
         @Header("X-User-Id") userId: String,
         @Header("X-Auth-Token") token: String,
+        @Query("offset") offset: Int
     ): MembersResponse
 }

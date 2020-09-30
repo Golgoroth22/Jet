@@ -39,6 +39,17 @@ class MembersActivityViewModel(private val repository: MembersActivityRepository
         }
     }
 
+    fun getMoreMembers() {
+        if (hasInternetConnection) {
+            repository.increaseOffset()
+            getMembers()
+        } else {
+            mMembersLiveData.postValue(
+                UiResponse(isLoading = false, error = Throwable(noInternetMessage))
+            )
+        }
+    }
+
     private fun receiveSuccessfulResponse(response: List<MemberDB>) {
         mMembersLiveData.postValue(UiResponse(response.map { it.convertTo() }, isLoading = false))
     }

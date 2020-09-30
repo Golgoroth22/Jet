@@ -9,4 +9,5 @@
 
     <!-- Activity MemberDetails -->
     <string name="activity_member_details_title">Контакт</string>
+    <string name="item_increase_members_button">Загрузить еще</string>
 </resources>

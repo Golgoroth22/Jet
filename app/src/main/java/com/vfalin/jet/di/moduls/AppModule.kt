@@ -5,12 +5,14 @@ import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.vfalin.jet.db.AppDatabase
+import com.vfalin.jet.interactors.OffsetStorageImpl
 import com.vfalin.jet.network.LoggingInterceptor
 import com.vfalin.jet.network.RetrofitBase
 import com.vfalin.jet.network.services.MembersService
 import com.vfalin.jet.repositories.MemberDetailsActivityRepositoryImpl
 import com.vfalin.jet.repositories.MembersActivityRepositoryImpl
 import com.vfalin.jet.utils.ConnectivityLiveData
+import com.vfalin.jet.utils.PreferencesHelper
 import com.vfalin.jet.utils.ResourceManager
 import com.vfalin.jet.viewmodel.factories.MemberDetailsActivityViewModelFactory
 import com.vfalin.jet.viewmodel.factories.MembersActivityViewModelFactory
@@ -45,7 +47,8 @@ class AppModule(context: Context) : Module() {
             MembersActivityViewModelFactory(
                 MembersActivityRepositoryImpl(
                     retrofit.create(MembersService::class.java),
-                    db.membersDao()
+                    db.membersDao(),
+                    OffsetStorageImpl(PreferencesHelper(context))
                 )
             )
         )

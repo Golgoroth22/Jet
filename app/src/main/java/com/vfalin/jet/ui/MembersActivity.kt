@@ -45,7 +45,7 @@ class MembersActivity : AppCompatActivity() {
 
     private fun initViews() {
         membersManager = LinearLayoutManager(this)
-        membersAdapter = MembersAdapter()
+        membersAdapter = MembersAdapter { loadMoreMembers() }
         membersRecycler = findViewById<RecyclerView>(R.id.activity_members_recycler).apply {
             layoutManager = membersManager
             adapter = membersAdapter
@@ -88,5 +88,9 @@ class MembersActivity : AppCompatActivity() {
                 activity_members_recycler_swiperefresh.isRefreshing = false
             }
         })
+    }
+
+    private fun loadMoreMembers() {
+        viewModel.getMoreMembers()
     }
 }
