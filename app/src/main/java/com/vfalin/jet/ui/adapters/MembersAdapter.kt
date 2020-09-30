@@ -1,5 +1,6 @@
 package com.vfalin.jet.ui.adapters
 
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.vfalin.jet.R
 import com.vfalin.jet.model.MemberUi
 import com.vfalin.jet.network.RetrofitBase
+import com.vfalin.jet.ui.MemberDetailsActivity
 import com.vfalin.jet.utils.Constants
 
 class MembersAdapter : RecyclerView.Adapter<MembersAdapter.MemberViewHolder>() {
@@ -61,7 +64,10 @@ class MembersAdapter : RecyclerView.Adapter<MembersAdapter.MemberViewHolder>() {
                 }
             }
             rootLayout.setOnClickListener {
-                TODO("Переход на экран с подробной информацией")
+                val intent = Intent(it.context, MemberDetailsActivity::class.java).apply {
+                    putExtra(MemberDetailsActivity.MEMBER_ID_TAG, member.id)
+                }
+                it.context.startActivity(intent)
             }
         }
     }

@@ -5,4 +5,7 @@
     <!-- Activity Members -->
     <string name="activity_members_title">Контакты</string>
     <string name="activity_members_no_members_info">Здесь пока никого нет :(</string>
+
+    <!-- Activity MemberDetails -->
+    <string name="activity_member_details_title">Контакт</string>
 </resources>

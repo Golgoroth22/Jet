@@ -8,8 +8,11 @@ import com.vfalin.jet.db.AppDatabase
 import com.vfalin.jet.network.LoggingInterceptor
 import com.vfalin.jet.network.RetrofitBase
 import com.vfalin.jet.network.services.MembersService
+import com.vfalin.jet.repositories.MemberDetailsActivityRepositoryImpl
 import com.vfalin.jet.repositories.MembersActivityRepositoryImpl
 import com.vfalin.jet.utils.ConnectivityLiveData
+import com.vfalin.jet.utils.ResourceManager
+import com.vfalin.jet.viewmodel.factories.MemberDetailsActivityViewModelFactory
 import com.vfalin.jet.viewmodel.factories.MembersActivityViewModelFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -36,6 +39,7 @@ class AppModule(context: Context) : Module() {
     init {
         bind(Context::class.java).toInstance(context)
         bind(ConnectivityLiveData::class.java).singleton()
+        bind(ResourceManager::class.java).singleton()
 
         bind(MembersActivityViewModelFactory::class.java).toInstance(
             MembersActivityViewModelFactory(
@@ -43,6 +47,11 @@ class AppModule(context: Context) : Module() {
                     retrofit.create(MembersService::class.java),
                     db.membersDao()
                 )
+            )
+        )
+        bind(MemberDetailsActivityViewModelFactory::class.java).toInstance(
+            MemberDetailsActivityViewModelFactory(
+                MemberDetailsActivityRepositoryImpl(db.membersDao())
             )
         )
     }

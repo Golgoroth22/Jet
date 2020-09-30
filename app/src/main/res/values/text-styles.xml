@@ -13,15 +13,23 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Text.Regular.Grey">
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
+    <style name="Text.Regular.Grey.14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="Text.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Text.Bold.White">
-        <item name="android:textColor">@android:color/white</item>
+    <style name="Text.Bold.Black">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="Text.Bold.White.18">
-        <item name="android:textSize">18sp</item>
+    <style name="Text.Bold.Black.20">
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>

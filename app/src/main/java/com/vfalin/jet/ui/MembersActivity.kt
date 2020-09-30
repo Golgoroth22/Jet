@@ -14,16 +14,10 @@ import com.vfalin.jet.utils.injectViewModel
 import com.vfalin.jet.viewmodel.MembersActivityViewModel
 import com.vfalin.jet.viewmodel.factories.MembersActivityViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import toothpick.Toothpick
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
-class MembersActivity : AppCompatActivity(), CoroutineScope {
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
-
+class MembersActivity : AppCompatActivity() {
     @Inject
     lateinit var factory: MembersActivityViewModelFactory
     private lateinit var viewModel: MembersActivityViewModel
@@ -37,14 +31,19 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
         Toothpick.inject(this, Toothpick.openScope(Scopes.APP))
         setContentView(R.layout.activity_main)
         viewModel = injectViewModel(factory)
+        initToolbar()
         initViews()
         initListeners()
         initLiveData()
         viewModel.getMembers()
     }
 
-    private fun initViews() {
+    private fun initToolbar() {
+        setSupportActionBar(activity_members_toolbar)
         activity_members_toolbar.setTitleTextColor(Color.WHITE)
+    }
+
+    private fun initViews() {
         membersManager = LinearLayoutManager(this)
         membersAdapter = MembersAdapter()
         membersRecycler = findViewById<RecyclerView>(R.id.activity_members_recycler).apply {
