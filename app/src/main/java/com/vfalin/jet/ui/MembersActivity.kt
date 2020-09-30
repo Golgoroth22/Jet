@@ -56,7 +56,6 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
     private fun initListeners() {
         activity_members_recycler_swiperefresh.setOnRefreshListener {
             viewModel.getMembers()
-            activity_members_recycler_swiperefresh.isRefreshing = false
         }
     }
 
@@ -84,10 +83,10 @@ class MembersActivity : AppCompatActivity(), CoroutineScope {
                 ).show()
             }
             if (uiResponse.isLoading) {
-                activity_members_progress_bar.visibility = View.VISIBLE
+                activity_members_recycler_swiperefresh.isRefreshing = true
                 activity_members_info_text.visibility = View.GONE
             } else {
-                activity_members_progress_bar.visibility = View.GONE
+                activity_members_recycler_swiperefresh.isRefreshing = false
             }
         })
     }
