@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_member_details_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MemberDetailsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/activity_member_details_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="@dimen/elevation_tiny"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activity_member_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:navigationIcon="@drawable/ic_arrow_back_white"
+            app:title="@string/activity_member_details_title" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/activity_member_details_avatar_card"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="@dimen/spacing_medium"
+        app:cardCornerRadius="50dp"
+        app:cardElevation="@dimen/elevation_none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_member_details_app_bar_layout">
+
+        <ImageView
+            android:id="@+id/activity_member_details_avatar_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/activity_member_details_name_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/spacing_medium"
+        android:textAppearance="@style/Text.Bold.Black.20"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_member_details_avatar_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/activity_member_details_avatar_card"
+        app:layout_constraintTop_toTopOf="@+id/activity_member_details_avatar_card" />
+
+    <LinearLayout
+        android:id="@+id/activity_member_details_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_member_details_avatar_card">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_tiny"
+            android:text="ID"
+            android:textAppearance="@style/Text.Regular.Grey.14" />
+
+        <TextView
+            android:id="@+id/activity_member_details_id_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_tiny"
+            android:textAppearance="@style/Text.Regular.Black.16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:padding="@dimen/spacing_tiny"
+            android:text="Nickname"
+            android:textAppearance="@style/Text.Regular.Grey.14" />
+
+        <TextView
+            android:id="@+id/activity_member_details_nickname_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_tiny"
+            android:textAppearance="@style/Text.Regular.Black.16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:padding="@dimen/spacing_tiny"
+            android:text="Status"
+            android:textAppearance="@style/Text.Regular.Grey.14" />
+
+        <TextView
+            android:id="@+id/activity_member_details_status_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_tiny"
+            android:textAppearance="@style/Text.Regular.Black.16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:padding="@dimen/spacing_tiny"
+            android:text="UtcOffset"
+            android:textAppearance="@style/Text.Regular.Grey.14" />
+
+        <TextView
+            android:id="@+id/activity_member_details_offset_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_tiny"
+            android:textAppearance="@style/Text.Regular.Black.16" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

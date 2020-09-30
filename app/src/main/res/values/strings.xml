@@ -1,3 +1,13 @@
 <resources>
+    <!-- App -->
     <string name="app_name">Jet</string>
+    <string name="app_no_internet_message">Отсутствует интернет-соединение</string>
+
+    <!-- Activity Members -->
+    <string name="activity_members_title">Контакты</string>
+    <string name="activity_members_no_members_info">Здесь пока никого нет :(</string>
+
+    <!-- Activity MemberDetails -->
+    <string name="activity_member_details_title">Контакт</string>
+    <string name="item_increase_members_button">Загрузить еще</string>
 </resources>
